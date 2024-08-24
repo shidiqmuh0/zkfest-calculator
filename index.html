@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZKfest Staking Calculator</title>
+</head>
+<body>
+    <h1>ZKfest Staking Calculator</h1>
+    <form id="stakingForm">
+        <label for="modal">Modal (USD):</label>
+        <input type="number" id="modal" name="modal" required>
+        <br><br>
+        <label for="days">Waktu Staking (Hari):</label>
+        <input type="number" id="days" name="days" required>
+        <br><br>
+        <button type="button" onclick="calculateRewards()">Hitung Keuntungan</button>
+    </form>
+
+    <h2>Hasil:</h2>
+    <p id="usdcResult">Keuntungan Pool USDC/USDC-e: </p>
+    <p id="usdtResult">Keuntungan Pool USDT/USDC: </p>
+
+    <script>
+        function calculateRewards() {
+            // Ambil nilai input
+            let modal = document.getElementById('modal').value;
+            let days = document.getElementById('days').value;
+
+            // Konversi input ke angka
+            modal = parseFloat(modal);
+            days = parseInt(days);
+
+            // Fee APR dan Staking APR untuk kedua pool
+            let feeAPRUSDC = 4.27 / 100;
+            let stakingAPRUSDC = 95.64 / 100;
+            let feeAPRUSDT = 0.86 / 100;
+            let stakingAPRUSDT = 63.47 / 100;
+
+            // Perhitungan keuntungan
+            let dailyRewardUSDC = modal * ((feeAPRUSDC + stakingAPRUSDC) / 365);
+            let totalRewardUSDC = dailyRewardUSDC * days;
+
+            let dailyRewardUSDT = modal * ((feeAPRUSDT + stakingAPRUSDT) / 365);
+            let totalRewardUSDT = dailyRewardUSDT * days;
+
+            // Tampilkan hasil
+            document.getElementById('usdcResult').innerText = "Keuntungan Pool USDC/USDC-e: $" + totalRewardUSDC.toFixed(2);
+            document.getElementById('usdtResult').innerText = "Keuntungan Pool USDT/USDC: $" + totalRewardUSDT.toFixed(2);
+        }
+    </script>
+</body>
+</html>
